@@ -1,0 +1,146 @@
+.room-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px 60px;
+}
+
+/* ── Header ── */
+.room-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.room-title {
+  font-family: 'Kalam', cursive;
+  font-weight: 700;
+  font-size: 2.75rem;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.room-squiggle {
+  display: flex;
+  justify-content: center;
+  margin-top: -2px;
+}
+
+/* ── Card ── */
+.room-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+  transform: rotate(-0.3deg);
+}
+
+/* ── Room ID badge ── */
+.room-id-label {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.95rem;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+.room-id-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.room-id-value {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--color-ink);
+  letter-spacing: 0.15em;
+  margin: 0;
+}
+
+.copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--color-muted);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.copy-btn--copied {
+  color: var(--color-green);
+  border-color: var(--color-green);
+}
+
+.room-id-hint {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.875rem;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+/* ── Status ── */
+.room-waiting {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.05rem;
+  color: var(--color-ink-soft);
+  animation: pulse 2s ease-in-out infinite;
+  margin: 0;
+}
+
+.room-joined {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.05rem;
+  color: var(--color-green);
+  margin: 0;
+  animation: slideInUp 0.4s ease-out;
+}
+
+/* ── Role badge ── */
+.room-role-badge {
+  position: relative;
+  padding: 3px 12px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+}
+
+.room-role-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--color-muted);
+  border-radius: 20px;
+  filter: url(#sketchy);
+  pointer-events: none;
+}
+
+/* ── Footer actions ── */
+.room-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .room-page { padding: 24px 12px 48px; }
+  .room-title { font-size: 2.25rem; }
+  .room-card  { padding: 1.5rem 1.25rem; }
+  .room-id-value { font-size: 1.5rem; }
+}

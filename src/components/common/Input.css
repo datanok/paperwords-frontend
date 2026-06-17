@@ -1,0 +1,60 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.input-label {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.required { color: var(--color-red); }
+
+.input-field {
+  padding: var(--space-md);
+  border: 2.5px solid var(--color-ink);
+  border-radius: var(--radius-md);
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  background: var(--color-card);
+  color: var(--color-ink);
+  transition: border-color var(--transition-fast);
+  letter-spacing: 0.05em;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--color-blue);
+}
+
+.input-field:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-paper);
+}
+
+.input-field::placeholder {
+  color: var(--color-ink-soft);
+  font-family: 'Patrick Hand', cursive;
+}
+
+.input-wrapper.input-error .input-field {
+  border-color: var(--color-red);
+}
+
+.input-error-message {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.875rem;
+  color: var(--color-red);
+}
+
+@media (max-width: 480px) {
+  .input-field { font-size: 16px; }
+  .input-wrapper { margin-bottom: var(--space-md); }
+}

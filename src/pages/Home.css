@@ -1,0 +1,134 @@
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px 60px;
+}
+
+/* ── Header ── */
+.home-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.home-title {
+  font-family: 'Kalam', cursive;
+  font-weight: 700;
+  font-size: 2.75rem;
+  color: var(--color-ink);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.home-squiggle {
+  display: flex;
+  justify-content: center;
+  margin-top: -2px;
+}
+
+.home-subtitle {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  color: var(--color-ink-soft);
+  margin: 6px 0 0;
+}
+
+/* ── Main content ── */
+.home-main {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Connection warning ── */
+.connection-warning {
+  padding: 10px 16px;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  font-family: 'Patrick Hand', cursive;
+  color: var(--color-yellow);
+  position: relative;
+}
+
+.connection-warning::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--color-yellow);
+  border-radius: var(--radius-lg);
+  filter: url(#sketchy);
+  pointer-events: none;
+}
+
+/* ── Card grid ── */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.home-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-card-tilt-left  { transform: rotate(-0.5deg); }
+.home-card-tilt-right { transform: rotate(0.4deg); }
+
+.home-card h2 {
+  font-family: 'Kalam', cursive;
+  font-size: 1.375rem;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.home-card p {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.95rem;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+.join-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── Error ── */
+.error-message {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.95rem;
+  color: var(--color-red);
+  text-align: center;
+  animation: shake 0.4s ease-out;
+}
+
+/* ── Footer ── */
+.home-footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+  border-top: 1.5px solid var(--color-grid);
+  padding-top: 1rem;
+  max-width: 400px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-title { font-size: 2.25rem; }
+  .home-page  { padding: 24px 12px 48px; }
+  .home-card  { padding: 1.25rem; }
+}

@@ -1,0 +1,11 @@
+.game-screen {
+  width: 100%;
+  padding: var(--space-lg);
+  animation: slideInUp 0.5s ease-out;
+}
+
+@media (max-width: 768px) {
+  .game-screen {
+    padding: var(--space-md);
+  }
+}
