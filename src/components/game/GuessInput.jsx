@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { LetterRow } from './PaperUI';
 import { isValidWord } from '../../utils/wordUtils';
+import { useSocketContext } from '../../context/SocketContext';
+import { SOCKET_EVENTS } from '../../constants/gameConstants';
 import './GameComponents.css';
 
 export const GuessInput = ({ onGuess, disabled = false, wordLength }) => {
+  const { emit } = useSocketContext();
   const [word, setWord] = useState('');
   const [error, setError] = useState(null);
   const [checking, setChecking] = useState(false);
@@ -22,6 +25,7 @@ export const GuessInput = ({ onGuess, disabled = false, wordLength }) => {
 
     onGuess(trimmed);
     setWord('');
+    emit(SOCKET_EVENTS.GAME_TYPING, { word: '' });
   };
 
   return (
@@ -31,7 +35,7 @@ export const GuessInput = ({ onGuess, disabled = false, wordLength }) => {
       <LetterRow
         value={word}
         length={wordLength}
-        onChange={(v) => { setWord(v); setError(null); }}
+        onChange={(v) => { setWord(v); setError(null); emit(SOCKET_EVENTS.GAME_TYPING, { word: v }); }}
         onSubmit={handleSubmit}
         disabled={disabled || checking}
         autoFocus

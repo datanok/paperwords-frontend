@@ -51,6 +51,19 @@ export const SOCKET_EVENTS = {
   // Stickers
   GAME_SEND_STICKER: 'game:sendSticker',
   GAME_STICKER_RECEIVED: 'game:stickerReceived',
+
+  // Typing
+  GAME_TYPING: 'game:typing',
+  GAME_OPPONENT_TYPING: 'game:opponentTyping',
+
+  // Rounds
+  GAME_ROUND_WON: 'game:roundWon',
+  GAME_LOSER_SOLVED: 'game:loserSolved',
+  GAME_GIVE_UP: 'game:giveUp',
+  GAME_ROUND_END: 'game:roundEnd',
+  GAME_NEXT_ROUND: 'game:nextRound',
+  GAME_OPPONENT_READY_NEXT: 'game:opponentReadyNext',
+  GAME_ROUND_RESET: 'game:roundReset',
 };
 
 export const SESSION_KEYS = {
