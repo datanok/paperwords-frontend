@@ -38,7 +38,7 @@ const CopyButton = ({ text }) => {
 const Room = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const { connected, emit, on, userId } = useSocketContext();
+  const { connected, reconnecting, emit, on, userId, restoredRoom } = useSocketContext();
   const { session, clearSession } = useSession();
   const { resetGame } = useGameContext();
   const [roomState, setRoomState] = useState(null);
@@ -47,8 +47,25 @@ const Room = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameWordLength, setGameWordLength] = useState(session?.wordLength || null);
 
+  // Restore game state after a mobile reconnect
   useEffect(() => {
-    if (!connected || !userId) { navigate('/'); return; }
+    if (!restoredRoom || restoredRoom.roomId !== roomId) return;
+    setLoading(false);
+    if (restoredRoom.wordLength) setGameWordLength(restoredRoom.wordLength);
+    if (restoredRoom.state === 'playing' || restoredRoom.state === 'round_ended') {
+      setGameStarted(true);
+    }
+  }, [restoredRoom, roomId]);
+
+  useEffect(() => {
+    // Don't kick the user while a reconnection attempt is in progress
+    if (!connected && !reconnecting) {
+      const timer = setTimeout(() => navigate('/'), 8000);
+      return () => clearTimeout(timer);
+    }
+    if (!connected) return;
+    if (!userId) { navigate('/'); return; }
+
     setLoading(false);
     setError(null);
     if (session?.wordLength) setGameStarted(true);
@@ -62,7 +79,7 @@ const Room = () => {
       setGameStarted(true);
     }));
     return () => unsubs.forEach((u) => u());
-  }, [connected, session, userId, navigate, roomId, on]);
+  }, [connected, reconnecting, session, userId, navigate, roomId, on]);
 
   const handleStartGame = () => {
     setGameStarted(true);
@@ -85,7 +102,7 @@ const Room = () => {
           <div className="room-squiggle"><Squiggle width={220} /></div>
         </header>
         <div className="paper-card room-card">
-          <p className="room-waiting">Connecting...</p>
+          <p className="room-waiting">{reconnecting ? 'Reconnecting...' : 'Connecting...'}</p>
         </div>
       </div>
     );
