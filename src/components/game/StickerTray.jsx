@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './GameComponents.css';
 
 export const STICKERS = Array.from({ length: 20 }, (_, i) => ({
@@ -10,6 +10,18 @@ export const STICKERS = Array.from({ length: 20 }, (_, i) => ({
 export function StickerTray({ onSend }) {
   const [sent, setSent] = useState(null);
   const [preview, setPreview] = useState(null);
+  const previewOpenedAt = useRef(0);
+
+  const openPreview = (s) => {
+    setPreview(s);
+    previewOpenedAt.current = Date.now();
+  };
+
+  const closePreview = () => {
+    // Mobile browsers fire a ghost click ~300ms after touch — ignore it
+    if (Date.now() - previewOpenedAt.current < 400) return;
+    setPreview(null);
+  };
 
   const handleSend = (sticker) => {
     onSend(sticker);
@@ -27,7 +39,7 @@ export function StickerTray({ onSend }) {
             <button
               key={s.id}
               className={`sticker-btn${sent === s.id ? ' sticker-btn-sent' : ''}`}
-              onClick={() => setPreview(s)}
+              onClick={() => openPreview(s)}
               title={s.label}
               disabled={sent !== null}
             >
@@ -39,7 +51,7 @@ export function StickerTray({ onSend }) {
       </div>
 
       {preview && (
-        <div className="sticker-preview-backdrop" onClick={() => setPreview(null)}>
+        <div className="sticker-preview-backdrop" onClick={closePreview}>
           <div className="sticker-preview-popup" onClick={(e) => e.stopPropagation()}>
             <img src={preview.src} alt={preview.label} className="sticker-preview-img" />
             <div className="sticker-preview-actions">
