@@ -731,6 +731,7 @@
   transition: transform 0.12s ease-out;
   padding: 0;
   overflow: hidden;
+  touch-action: manipulation;
 }
 
 .sticker-img {
@@ -902,4 +903,14 @@
   .game-board,
   .win-screen,
   .loss-screen { padding: 1.25rem 1rem; }
+
+  .sticker-preview-popup {
+    padding: 1.25rem 1rem;
+    max-width: calc(100vw - 2.5rem);
+  }
+
+  .sticker-preview-img {
+    width: 120px;
+    height: 120px;
+  }
 }

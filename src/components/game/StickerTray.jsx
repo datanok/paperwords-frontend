@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './GameComponents.css';
 
 export const STICKERS = Array.from({ length: 20 }, (_, i) => ({
@@ -10,16 +10,24 @@ export const STICKERS = Array.from({ length: 20 }, (_, i) => ({
 export function StickerTray({ onSend }) {
   const [sent, setSent] = useState(null);
   const [preview, setPreview] = useState(null);
-  const previewOpenedAt = useRef(0);
+  // Block backdrop close for 550ms after opening to swallow the ghost click
+  // that mobile browsers fire ~300ms after touchend.
+  const closeBlocked = useRef(false);
+  const closeBlockTimer = useRef(null);
+
+  useEffect(() => {
+    return () => { if (closeBlockTimer.current) clearTimeout(closeBlockTimer.current); };
+  }, []);
 
   const openPreview = (s) => {
     setPreview(s);
-    previewOpenedAt.current = Date.now();
+    closeBlocked.current = true;
+    if (closeBlockTimer.current) clearTimeout(closeBlockTimer.current);
+    closeBlockTimer.current = setTimeout(() => { closeBlocked.current = false; }, 550);
   };
 
   const closePreview = () => {
-    // Mobile browsers fire a ghost click ~300ms after touch — ignore it
-    if (Date.now() - previewOpenedAt.current < 400) return;
+    if (closeBlocked.current) return;
     setPreview(null);
   };
 
@@ -27,6 +35,8 @@ export function StickerTray({ onSend }) {
     onSend(sticker);
     setSent(sticker.id);
     setPreview(null);
+    closeBlocked.current = false;
+    if (closeBlockTimer.current) clearTimeout(closeBlockTimer.current);
     setTimeout(() => setSent(null), 1800);
   };
 
